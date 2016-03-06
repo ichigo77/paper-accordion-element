@@ -1,0 +1,145 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <!-- Step 1: import the element to test -->
+    <link rel="import" href="../paper-accordion-element.html">
+  </head>
+  <body>
+
+    <!-- You can use the document as a place to set up your fixtures. -->
+    <paper-accordion-element header-text="accordion #1" id="accordion1" default-icon="expand-less" open-icon="expand-more">test content #1</paper-accordion-element>
+	<paper-accordion-element header-text="accordion #2" id="accordion2" default-icon="expand-less" open-icon="expand-more">test content #2</paper-accordion-element>
+
+    <script>
+		suite('<paper-accordion-element>',function()
+			{
+        var accordion1;
+		var accordion2;
+        
+        setup(function(){
+          accordion1 = document.getElementById("accordion1");
+		      accordion2 = document.getElementById("accordion2");
+        });
+        
+        teardown(function(){
+          accordion1.hideContainer();
+          accordion2.hideContainer();
+        });
+        
+		test('check the "header" property', function() {
+		    assert.equal('accordion #1',accordion1.headerText);
+			assert.equal('accordion #2',accordion2.headerText);		
+		    });
+        
+        test('check attribute "content-collapsed" which must be false',function(){
+          var element1Attribute = accordion1.getAttribute('content-collapsed');
+          var element2Attribute = accordion2.getAttribute('content-collapsed');
+          assert.equal('false',element1Attribute);
+          assert.equal('false',element2Attribute);
+        });
+        
+        test('check the internal "isCollapsed" property',function(){
+          assert.isFalse(accordion1.isCollapsed);
+          assert.isFalse(accordion2.isCollapsed);
+        });
+         test('check property default-icon which has to have got the value expand-less', function(){
+          assert.equal('expand-less',accordion1.defaultIcon);
+          assert.equal('expand-less',accordion2.defaultIcon);
+       });
+       
+       test('check property open-icon which has to have got the value expand-more',function(){
+           assert.equal('expand-more',accordion1.openIcon);
+          assert.equal('expand-more',accordion2.openIcon);
+       });
+        
+        test('collapse the first element and check attribute "content-collapsed" and property "isCollapsed"',function(){
+          var clickElement = GetChildByElementName(accordion1,'a');
+          assert.isNotNull(clickElement);
+          clickElement.click();
+            var element1Attribute = accordion1.getAttribute('content-collapsed');
+            var element2Attribute = accordion2.getAttribute('content-collapsed');
+            assert.equal('true',element1Attribute);
+            assert.equal('false',element2Attribute);
+            assert.isTrue(accordion1.isCollapsed);
+            assert.isFalse(accordion2.isCollapsed);
+        
+        });
+       
+        test('collapse both elements and check attribute "content-collapsed" and property "isCollapsed"', function()
+        {
+            var accordion1ClickElement = GetChildByElementName(accordion1,'a');
+            var accordion2ClickElement = GetChildByElementName(accordion2,'a');
+            assert.isNotNull(accordion1ClickElement);
+            assert.isNotNull(accordion2ClickElement);
+            accordion1ClickElement.click();
+            accordion2ClickElement.click();
+              var element1Attribute = accordion1.getAttribute('content-collapsed');
+              var element2Attribute = accordion2.getAttribute('content-collapsed');
+              assert.equal('true',element1Attribute);
+              assert.equal('true',element2Attribute);
+              assert.isTrue(accordion1.isCollapsed);
+              assert.isTrue(accordion2.isCollapsed);              
+        });
+        
+        test('collapse one element and click a second time and check attribute "content-collapse" and property "isCollapsed"',function(){
+          var accordion1ClickElement = GetChildByElementName(accordion1,'a');
+          assert.isNotNull(accordion1ClickElement);
+          accordion1ClickElement.click();
+          var element1Attribute = accordion1.getAttribute('content-collapsed');
+          assert.equal('true',element1Attribute);
+          assert.isTrue(accordion1.isCollapsed);
+          accordion1ClickElement.click();
+          var element1AttributeAfterClick = accordion1.getAttribute('content-collapsed');
+          assert.equal('false',element1AttributeAfterClick);
+          assert.isFalse(accordion1.isCollapsed);
+        });
+        
+        test('collapse one element by calling the function showContainer', function(){
+           accordion1.showContainer();
+           var element1Attribute = accordion1.getAttribute('content-collapsed');
+           assert.equal('true',element1Attribute);
+           assert.isTrue(accordion1.isCollapsed); 
+        });
+        
+        test('collapse one element and close the same element by calling the functions showContainer and hideContainer in sequence',function(){
+           accordion1.showContainer();
+           var element1Attribute = accordion1.getAttribute('content-collapsed'); 
+           assert.equal('true',element1Attribute);
+           assert.isTrue(accordion1.isCollapsed);
+           accordion1.hideContainer();
+           var elementAttributeAfterClosing = accordion1.getAttribute('content-collapsed');
+           assert.equal('false', elementAttributeAfterClosing);
+           assert.isFalse(accordion1.isCollapsed);
+        });
+        
+        
+        function GetChildByElementName(rootElement,childElementName){
+          if(rootElement === undefined)return null;
+          var children = rootElement.getElementsByTagName(childElementName);
+          if(children.length<1)return null;
+          return children[0];
+        }
+        
+        
+        		
+			});
+      
+    </script>
+
+  </body>
+</html>

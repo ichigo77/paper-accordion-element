@@ -1,0 +1,64 @@
+<link rel="import" href="../polymer/polymer.html">
+
+
+<!--
+By default, the collapsed block disappears after clicking on the header text again. If it is required that only one accordion element can be collapsed, then 
+the accordion element tags have to be surrounded by the element paper-accordion-container.
+
+Example:
+<paper-accordion-container>
+ <paper-accordion-element header="Please click me">...</paper-accordion-element>
+ <paper-accordion-element header="Please click me #2">...</paper-accordion-element>
+</paper-accordion-container>
+
+The accordion container element provides one custom CSS properties for definig 
+the distance between the paper-accordion-element items.
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--accordion-container-element-margin` | defines the top margin of a accordion-paper-element | `5px`
+
+@demo demo/index.html
+@element paper-accordion-container
+-->
+
+<dom-module id="paper-accordion-container">
+<template>
+	<style>
+	
+		#wrapper ::content > paper-accordion-element + paper-accordion-element > #paper-accordion-container {
+			margin-top: var(--accordion-container-element-margin,5px);
+        }
+	</style>
+ </style>
+	<div  id="wrapper" on-opening="openingRequested">
+	<content></content>
+	</div>
+</template>	
+<script>
+	Polymer({
+		is:'paper-accordion-container',
+		/*
+		* event handler which hides all collapsed container and stops the event propagation
+		*/
+		openingRequested:function(event){
+		 this._closeOpenComponents();
+		 event.stopPropagation();
+		},
+		_closeOpenComponents:function(){
+			var childElements = Polymer.dom(this).children;
+			if(childElements === undefined || childElements.lenght<1) return;
+			var length = childElements.length;
+			for(i=0;i<length;i++){
+				var child = childElements[i];
+				/*
+				* uses the paper-accordion-element method hideContainer to close all open container
+				*/
+				child.hideContainer();
+			}
+		}
+	});
+	
+</script>
+	
+</dom-module>

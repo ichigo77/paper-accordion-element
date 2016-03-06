@@ -1,0 +1,190 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <!-- Step 1: import the element to test -->
+    <link rel="import" href="../paper-accordion-element.html">
+    <link rel="import" href="../paper-accordion-container.html">
+  </head>
+  <body>
+
+    <!-- You can use the document as a place to set up your fixtures. -->
+    <paper-accordion-container>
+        <paper-accordion-element header-text="accordion #1" id="accordion1" >test content #1</paper-accordion-element>
+	   <paper-accordion-element header-text="accordion #2" id="accordion2">test content #2</paper-accordion-element>
+       <paper-accordion-element header-text="accordion #3" id="accordion3">
+           <paper-accordion-container>
+               <paper-accordion-element header-text="accordion_sub #1" id="accordion_Sub_1">test content #3</paper-accordion-element>
+               <paper-accordion-element header-text="accordion_sub #2" id="accordion_Sub_2">test content #3</paper-accordion-element>
+           </paper-accordion-container>
+       </paper-accordion-element>
+           
+    </paper-accordion-container>
+
+    <script>
+		suite('<paper-accordion-container>',function()
+			{
+        var accordion1;
+		var accordion2;
+        var accordion3;
+        var accordionSub31;
+        var accordionSub32;
+        
+        setup(function(){
+          accordion1 = document.getElementById("accordion1");
+		  accordion2 = document.getElementById("accordion2");
+          accordion3 = document.getElementById("accordion3");
+          accordionSub31 = document.getElementById("accordion_Sub_1");
+          accordionSub32 = document.getElementById("accordion_Sub_2");
+          
+          
+        });
+        
+        teardown(function(){
+          accordion1.hideContainer();
+          accordion2.hideContainer();
+          accordion3.hideContainer();
+          accordionSub31.hideContainer();
+          accordionSub32.hideContainer();
+        });
+        
+		test('check the "header" property', function() {
+		    assert.equal('accordion #1',accordion1.headerText);
+			assert.equal('accordion #2',accordion2.headerText);
+            assert.equal('accordion_sub #1',accordionSub31.headerText);
+            assert.equal('accordion_sub #2',accordionSub32.headerText);		
+		    });
+            
+        
+       test('check the attribute "content-collapsed" which has to be false',function(){
+           assert.equal('false',accordion1.getAttribute('content-collapsed'));
+           assert.equal('false',accordion2.getAttribute('content-collapsed'));
+           assert.equal('false',accordion3.getAttribute('content-collapsed'));
+           assert.equal('false',accordionSub31.getAttribute('content-collapsed'));
+           assert.equal('false',accordionSub32.getAttribute('content-collapsed'));
+       });
+       
+       test('check property "isCollapsed", value must be false because no element is collapsed', function(){
+           assert.isFalse(accordion1.isCollapsed);
+           assert.isFalse(accordion2.isCollapsed);
+           assert.isFalse(accordion3.isCollapsed);
+           assert.isFalse(accordionSub31.isCollapsed);
+           assert.isFalse(accordionSub32.isCollapsed);
+       });
+       
+      
+       
+       test('click on first element and check property "isCollapsed" and attribute "content-collapsed", both must be true',function(){
+          var  headerItem = GetChildByElementName(accordion1,'a');
+          headerItem.click();
+          CheckIfElementIsCollapsed(accordion1);
+          CheckIfElementIsClosed(accordion2);
+          CheckIfElementIsClosed(accordion3);
+          CheckIfElementIsClosed(accordionSub31);
+          CheckIfElementIsClosed(accordionSub32);
+       });
+       
+       test('click on first element and check property "isCollapsed" and attribute "content-collapsed", both must be true, then click on the same element again and the values must be false',function(){
+          var  headerItem = GetChildByElementName(accordion1,'a');
+          headerItem.click();
+          CheckIfElementIsCollapsed(accordion1);
+          CheckIfElementIsClosed(accordion2);
+          CheckIfElementIsClosed(accordion3);
+          CheckIfElementIsClosed(accordionSub31);
+          CheckIfElementIsClosed(accordionSub32);
+          headerItem.click();
+          CheckIfElementIsClosed(accordion1);
+          CheckIfElementIsClosed(accordion2);
+          CheckIfElementIsClosed(accordion3);
+          CheckIfElementIsClosed(accordionSub31);
+          CheckIfElementIsClosed(accordionSub32);
+       });
+       
+       test('click on first element and then click on second element, after clicking on second element the first element has to be closed',function(){
+          var  headerItem = GetChildByElementName(accordion1,'a');
+          headerItem.click();
+          CheckIfElementIsCollapsed(accordion1);
+          CheckIfElementIsClosed(accordion2);
+          CheckIfElementIsClosed(accordion3);
+          CheckIfElementIsClosed(accordionSub31);
+          CheckIfElementIsClosed(accordionSub32);
+          var secondHeaderItem = GetChildByElementName(accordion2,'a');
+          secondHeaderItem.click();
+          CheckIfElementIsClosed(accordion1);
+          CheckIfElementIsCollapsed(accordion2);
+          CheckIfElementIsClosed(accordion3);
+          CheckIfElementIsClosed(accordionSub31);
+          CheckIfElementIsClosed(accordionSub32);
+       });
+        
+       test('click on first element and the click on third element and on first sub element',function(){
+           var  headerItem = GetChildByElementName(accordion1,'a');
+          headerItem.click();
+          CheckIfElementIsCollapsed(accordion1);
+          CheckIfElementIsClosed(accordion2);
+          CheckIfElementIsClosed(accordion3);
+          CheckIfElementIsClosed(accordionSub31);
+          CheckIfElementIsClosed(accordionSub32);
+          var secondHeaderItem = GetChildByElementName(accordion3,'a');
+          secondHeaderItem.click();
+          CheckIfElementIsClosed(accordion1);
+          CheckIfElementIsClosed(accordion2);
+          CheckIfElementIsCollapsed(accordion3);
+          CheckIfElementIsClosed(accordionSub31);
+          CheckIfElementIsClosed(accordionSub32);
+          var firstSubHeaderItem = GetChildByElementName(accordionSub31,'a');
+          firstSubHeaderItem.click();
+          CheckIfElementIsClosed(accordion1);
+          CheckIfElementIsClosed(accordion2);
+          CheckIfElementIsCollapsed(accordion3);
+          CheckIfElementIsCollapsed(accordionSub31);
+          CheckIfElementIsClosed(accordionSub32);
+       });
+       
+       test('call function showContainer() and check if collapsed',function(){
+          accordion1.showContainer();
+          CheckIfElementIsCollapsed(accordion1);
+          assert.isTrue(accordion1.isCollapsed);
+       });
+       
+       test('after calling showContainer, invoke function hideContainer and check if hidden',function(){
+           accordion1.showContainer();
+          CheckIfElementIsCollapsed(accordion1);
+          assert.isTrue(accordion1.isCollapsed);
+          accordion1.hideContainer();
+          CheckIfElementIsClosed(accordion1);
+          assert.isFalse(accordion1.isCollapsed);
+       });
+       
+        
+        function CheckIfElementIsCollapsed(rootElement){
+            assert.isTrue(rootElement.isCollapsed);
+            assert.equal('true',rootElement.getAttribute('content-collapsed'));
+        }
+        
+        function CheckIfElementIsClosed(rootElement){
+            assert.isFalse(rootElement.isCollapsed);
+            assert.equal('false',rootElement.getAttribute('content-collapsed'));
+        }
+        
+        function GetChildByElementName(rootElement,childElementName){
+          if(rootElement === undefined)return null;
+          var children = rootElement.getElementsByTagName(childElementName);
+          if(children.length<1)return null;
+          return children[0];
+        }
+        
+        
+        		
+			});
+      
+    </script>
+
+  </body>
+</html>

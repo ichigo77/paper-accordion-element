@@ -1,0 +1,101 @@
+ 
+<!doctype html>
+
+<html>
+<head>
+
+  <title>paper-accordion-element</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../../polymer/polymer.html">
+  <link rel="import" href="../paper-accordion-element.html">
+  <link rel="import" href="../paper-accordion-container.html">
+  <link rel="import" href="../../paper-card/paper-card.html">
+  <link rel="import" href="../../iron-flex-layout/iron-flex-layout.html">
+  <link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+ 
+
+<style is="custom-style" include="iron-flex">
+
+  .container {
+      background-color: #ccc;
+      padding: 5px;
+      max-width: 600px;
+      margin-bottom: 10px;
+    }
+  
+ .custom-style{
+           --accordion-header:{
+          background-color: #ffd;
+             };
+        
+ }
+ 
+ .custom-style2{
+     --accordion-header-ripple-color: #DDE;
+ }
+ 
+ .paper-card-header{
+     --paper-card-header:{
+       background-color:#00bcd4;   
+     };
+     --paper-card-header-color: #fff;
+ }
+ 
+ .card1-margin{
+     margin-top: 5px;
+ }
+ 
+
+ </style>
+
+</head>
+
+<body unresolved>
+    <div class="layout vertical center">
+  <div class="container">
+       
+       <paper-card heading="Element paper-accordion-element without surrounding" class="paper-card-header"> 
+        <div class="card-actions"> 
+         <div> 
+<paper-accordion-element header-text="Please click me" default-icon="expand-less" open-icon="expand-more" class="custom-style">
+     Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea, id minim maiestatis incorrupte duo. Dolorum verterem ad ius, his et nullam verterem. Eu alia debet usu, an doming tritani est. Vix ad ponderum petentium suavitate, eum eu tempor populo, graece sententiae constituam vim ex. Cu torquatos reprimique neglegentur nec, voluptua periculis has ut, at eos discere deleniti sensibus. Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea, id minim maiestatis incorrupte duo. Dolorum verterem ad ius, his et nullam verterem. Eu alia debet usu, an doming tritani est. Vix ad ponderum petentium suavitate, eum eu tempor populo, graece sententiae constituam vim ex. Cu torquatos reprimique neglegentur nec, voluptua periculis has ut, at eos discere deleniti sensibus.
+</paper-accordion-element>
+       </div>
+       <div class="card1-margin">
+<paper-accordion-element header-text="Please click me" default-icon="thumb-up" open-icon="thumb-down" class="custom-style2">
+     Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea, id minim maiestatis incorrupte duo. Dolorum verterem ad ius, his et nullam verterem. Eu alia debet usu, an doming tritani est. Vix ad ponderum petentium suavitate, eum eu tempor populo, graece sententiae constituam vim ex. Cu torquatos reprimique neglegentur nec, voluptua periculis has ut, at eos discere deleniti sensibus. Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea, id minim maiestatis incorrupte duo. Dolorum verterem ad ius, his et nullam verterem. Eu alia debet usu, an doming tritani est. Vix ad ponderum petentium suavitate, eum eu tempor populo, graece sententiae constituam vim ex. Cu torquatos reprimique neglegentur nec, voluptua periculis has ut, at eos discere deleniti sensibus.
+</paper-accordion-element>
+      </div>
+   </div>
+</paper-card>
+</div>
+<div class="container">
+    <paper-card heading="Element paper-accordion-element surrounded by paper-accordion-container" class="paper-card-header">
+        <div class="card-actions">
+    <paper-accordion-container>
+<paper-accordion-element header-text="Please click me" default-icon="expand-less" open-icon="expand-more" class="custom-style">
+     Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea, id minim maiestatis incorrupte duo. Dolorum verterem ad ius, his et nullam verterem. Eu alia debet usu, an doming tritani est. Vix ad ponderum petentium suavitate, eum eu tempor populo, graece sententiae constituam vim ex. Cu torquatos reprimique neglegentur nec, voluptua periculis has ut, at eos discere deleniti sensibus. Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea, id minim maiestatis incorrupte duo. Dolorum verterem ad ius, his et nullam verterem. Eu alia debet usu, an doming tritani est. Vix ad ponderum petentium suavitate, eum eu tempor populo, graece sententiae constituam vim ex. Cu torquatos reprimique neglegentur nec, voluptua periculis has ut, at eos discere deleniti sensibus.
+</paper-accordion-element> 
+<paper-accordion-element header-text="Please click me" default-icon="expand-less" open-icon="expand-more" class="custom-style2">
+     Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea, id minim maiestatis incorrupte duo. Dolorum verterem ad ius, his et nullam verterem. Eu alia debet usu, an doming tritani est. Vix ad ponderum petentium suavitate, eum eu tempor populo, graece sententiae constituam vim ex. Cu torquatos reprimique neglegentur nec, voluptua periculis has ut, at eos discere deleniti sensibus. Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea, id minim maiestatis incorrupte duo. Dolorum verterem ad ius, his et nullam verterem. Eu alia debet usu, an doming tritani est. Vix ad ponderum petentium suavitate, eum eu tempor populo, graece sententiae constituam vim ex. Cu torquatos reprimique neglegentur nec, voluptua periculis has ut, at eos discere deleniti sensibus.
+</paper-accordion-element>
+ <paper-accordion-element header-text="Nested elements" default-icon="lock" open-icon="lock-open" class="custom-style2">
+     <paper-accordion-container>
+         <paper-accordion-element header-text="Please click me" default-icon="expand-less" open-icon="expand-more" class="custom-style">
+     Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea, id minim maiestatis incorrupte duo. Dolorum verterem ad ius, his et nullam verterem. Eu alia debet usu, an doming tritani est. Vix ad ponderum petentium suavitate, eum eu tempor populo, graece sententiae constituam vim ex. Cu torquatos reprimique neglegentur nec, voluptua periculis has ut, at eos discere deleniti sensibus. Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea, id minim maiestatis incorrupte duo. Dolorum verterem ad ius, his et nullam verterem. Eu alia debet usu, an doming tritani est. Vix ad ponderum petentium suavitate, eum eu tempor populo, graece sententiae constituam vim ex. Cu torquatos reprimique neglegentur nec, voluptua periculis has ut, at eos discere deleniti sensibus.
+        </paper-accordion-element>
+        <paper-accordion-element header-text="Please click me" default-icon="expand-less" open-icon="expand-more" class="custom-style2">
+     Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea, id minim maiestatis incorrupte duo. Dolorum verterem ad ius, his et nullam verterem. Eu alia debet usu, an doming tritani est. Vix ad ponderum petentium suavitate, eum eu tempor populo, graece sententiae constituam vim ex. Cu torquatos reprimique neglegentur nec, voluptua periculis has ut, at eos discere deleniti sensibus. Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea, id minim maiestatis incorrupte duo. Dolorum verterem ad ius, his et nullam verterem. Eu alia debet usu, an doming tritani est. Vix ad ponderum petentium suavitate, eum eu tempor populo, graece sententiae constituam vim ex. Cu torquatos reprimique neglegentur nec, voluptua periculis has ut, at eos discere deleniti sensibus.
+        </paper-accordion-element>
+     </paper-accordion-container>
+</paper-accordion-element>
+</paper-accordion-container>
+</div>
+</paper-card>
+</div>
+ </div>
+</body>
+</html>
