@@ -35,7 +35,7 @@
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
-  "private": true,
+  "private": false,
   "repository": {
     "type": "git",
     "url": "git://github.com/ichigo77/paper-accordion-element.git"
