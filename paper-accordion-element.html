@@ -253,19 +253,19 @@ paper-ripple {
 			this.setAttribute('content-collapsed',this.isCollapsed);	
 		},
 		_CalculateItemHeight:function(){
-                return this.$.accordion_content_container.getBoundingClientRect()['height']+'px';
+                return this.$.accordion_content_container.getBoundingClientRect().height+'px';
             },
             _GetCurrentItemHeight:function(){
-                return this.$.accordion_content_container.style['height'];
+                return this.$.accordion_content_container.style.height;
             },
             _EnableTransitionDuration(shouldBeActivated){
                 this.$.accordion_content_container.style.transitionDuration = (shouldBeActivated ? '':'0s');
             },
             _SetItemHeight(size){
-                this.$.accordion_content_container.style['height'] = size;
+                this.$.accordion_content_container.style.height = size;
             },
             _SetDisplay(displayValue){
-                this.$.accordion_content_container.style['display']=displayValue;
+                this.$.accordion_content_container.style.display = displayValue;
             },
             _SetOffsetHeight(){
                 this.$.accordion_content_container.offsetHeight = this.$.accordion_content_container.offsetHeight;
