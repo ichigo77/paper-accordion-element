@@ -213,54 +213,57 @@ Custom property | Description | Default
                 }else{
                     this._EnableTransitionDuration(false);
                 }
-            },
-            /*
-    		* shows the content
-    		* @method showContainer
-    		*/
-    		showContainer:function(){
-                if(this.isCollapsed)return;
-                this.isCollapsed=true;
-             	this._SetItemHeight('auto');
-                var calculatedValue = this._CalculateItemHeight();
-                this._SetItemHeight('0px');
-                this._SetOffsetHeight();
-                this._EnableTransitionDuration(true);
-                this._SetItemHeight(calculatedValue);
-    		    this._ChangeIcon();
-    		},
-    		/*
-    		* hides the content
-    		* @method hideContainer
-    		*/
-    		hideContainer:function(){
-                if(!this.isCollapsed)return;
-                this.isCollapsed=false;
-                var calculatedHeight = this._CalculateItemHeight();
-                this._SetItemHeight(calculatedHeight);
-                this._EnableTransitionDuration(true);
-                this._SetOffsetHeight();
-    			this._SetItemHeight('0px');
-                this._ChangeIcon();
-            },
+            },           
+        /*
+		* shows the content
+		* @method showContainer
+		*/
+		showContainer:function(){
+            if(this.isCollapsed)return;
+            this.isCollapsed=true; 
+         	this._SetItemHeight('auto');
+            var calculatedValue = this._CalculateItemHeight();
+            this._SetItemHeight('0px');
+            this._SetOffsetHeight();
+            this._EnableTransitionDuration(true);
+            this._SetItemHeight(calculatedValue);
+		    this._ChangeIcon();                   
+		},
+		/*
+		* hides the content
+		* @method hideContainer
+		*/
+		hideContainer:function(){
+            if(!this.isCollapsed)return;
+            this.isCollapsed=false; 
+            var calculatedHeight = this._CalculateItemHeight();
+            this._SetItemHeight(calculatedHeight);
+            this._EnableTransitionDuration(true);
+            this._SetOffsetHeight();
+			this._SetItemHeight('0px');
+            this._ChangeIcon(); 
+        },
+		
+		_collapseChanged:function(){
+			this.setAttribute('content-collapsed',this.isCollapsed);	
+		},
+		_CalculateItemHeight:function(){
+                return this.$.accordion_content_container.getBoundingClientRect().height+'px';
 
-    		_collapseChanged:function(){
-    			this.setAttribute('content-collapsed',this.isCollapsed);
-    		},
-    		_CalculateItemHeight:function(){
-                return this.$.accordion_content_container.getBoundingClientRect()['height']+'px';
             },
             _GetCurrentItemHeight:function(){
-                return this.$.accordion_content_container.style['height'];
+                return this.$.accordion_content_container.style.height;
             },
             _EnableTransitionDuration:function(shouldBeActivated){
                 this.$.accordion_content_container.style.transitionDuration = (shouldBeActivated ? '':'0s');
             },
-            _SetItemHeight:function(size){
-                this.$.accordion_content_container.style['height'] = size;
+
+            _SetItemHeight(size){
+                this.$.accordion_content_container.style.height = size;
             },
-            _SetDisplay:function(displayValue){
-                this.$.accordion_content_container.style['display']=displayValue;
+            _SetDisplay(displayValue){
+                this.$.accordion_content_container.style.display = displayValue;
+
             },
             _SetOffsetHeight:function(){
                 this.$.accordion_content_container.offsetHeight = this.$.accordion_content_container.offsetHeight;
