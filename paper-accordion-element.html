@@ -10,8 +10,8 @@ The element paper-accordion-element creates a collapsible block of content. Afte
 
 
     <paper-accordion-element header="Please click me" default-icon="expand-less" open-icon="expand-more">...</paper-accordion-element>
-	
-By default, the collapsed block disappears after clicking on the header text again. If it is expected that only one accordion element can be collapsed, then 
+
+By default, the collapsed block disappears after clicking on the header text again. If it is expected that only one accordion element can be collapsed, then
 the accordion element tags have to be surrounded by the element paper-accordion-container.
 
     <paper-accordion-container>
@@ -23,7 +23,7 @@ the accordion element tags have to be surrounded by the element paper-accordion-
             <paper-accordion-container>
         </paper-accordion-element>
     </paper-accordion-container>
-    
+
 The accordion element provides some custom CSS properties for styling the element.
 
 Custom property | Description | Default
@@ -41,218 +41,213 @@ Custom property | Description | Default
 <dom-module id="paper-accordion-element">
 	<template>
 		<style is="custom-style">
-	
-    
+            .accordion-content-wrapper{
+            	-moz-transition-property: height;
+                -ms-transition-property: height;
+                -o-transition-property: height;
+                -webkit-transition-property: height;
+                transition-property: height;
+                -moz-transition-duration: var(--accordion-duration,300ms);
+                -ms-transition-duration: var(--accordion-duration,300ms);
+                -o-transition-duration: var(--accordion-duration,300ms);
+                -webkit-transition-duration: var(--accordion-duration,300ms);
+                transition-duration: var(--accordion-duration,300ms);
+            	height:0;
+            	overflow: hidden;
+                display:block;
+            }
 
+            .header{
+                padding-left:16px;
+                width: 100%;
+                background-color: #fff;
+                @apply(--accordion-header);
+            }
 
-.accordion-content-wrapper{
-	-moz-transition-property: height;
-    -ms-transition-property: height;
-    -o-transition-property: height;
-    -webkit-transition-property: height;
-    transition-property: height;
-    -moz-transition-duration: var(--accordion-duration,300ms);
-    -ms-transition-duration: var(--accordion-duration,300ms);
-    -o-transition-duration: var(--accordion-duration,300ms);
-    -webkit-transition-duration: var(--accordion-duration,300ms);
-    transition-duration: var(--accordion-duration,300ms);
-	height:0;	
-	overflow: hidden;
-    display:block;
-}
+            .header-text{
+                text-align: left;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                @apply(--layout-horizontal);
+            }
 
-.header{    
-    padding-left:16px;
-    width: 100%;  
-    background-color: #fff;
-    @apply(--accordion-header); 
-}
+            .header-text a {
+            	text-decoration: none;
+            	color:  black;
+                display: block;
+                font-size: 18px;
+                @apply(--accordion-header-text);
 
-.header-text{
-    text-align: left;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    @apply(--layout-horizontal);
-}
+            }
 
-.header-text a {
-	text-decoration: none;
-	color:  black;
-    display: block;
-    font-size: 18px;
-    @apply(--accordion-header-text);
-    	
-}	
+            .header-text iron-icon{
+                cursor: pointer;
+            }
 
-.header-text iron-icon{
-    cursor: pointer;
-}
+            .header-items-space{
+                padding-left: 10px;
+            }
 
-.header-items-space{
-    padding-left: 10px;
-}
+            paper-ripple {
+              color: var(--accordion-header-ripple-color, #4285f4);
+            }
 
-paper-ripple {
-  color: var(--accordion-header-ripple-color, #4285f4);
-}
-
-.container{
-    display: block;
-    width:100%;
-}
-
-	</style>
-    <div id="paper-accordion-container">
-	<paper-card class="header">
-     <div>
-        <paper-ripple recenters></paper-ripple>
-         <div class="header-text">
-             <a href="#" id="open_link" hidden$=[[!headerText]]>[[headerText]]</a>
-             <iron-icon hidden$=[[!defaultIcon]] icon=[[defaultIcon]] id="accordion_icon" class$=[[_computeIfSpaceNeeded(headerText,defaultIcon,openIcon)]]></iron-icon>
-         </div>
-     </div>
-    </paper-card>
-    <paper-card class="accordion-content-wrapper" id="accordion_content_container" >
-    <div class="card-actions" >    
-        <content></content>
-    </div>
-    </paper-card>
-    </div>
-    
+            .container{
+                display: block;
+                width:100%;
+            }
+    	</style>
+        <div id="paper-accordion-container">
+        	<paper-card class="header">
+                 <div>
+                    <paper-ripple recenters></paper-ripple>
+                     <div class="header-text">
+                         <a href="#" id="open_link" hidden$=[[!headerText]]>[[headerText]]</a>
+                         <iron-icon hidden$=[[!defaultIcon]] icon=[[defaultIcon]] id="accordion_icon" class$=[[_computeIfSpaceNeeded(headerText,defaultIcon,openIcon)]]></iron-icon>
+                     </div>
+                 </div>
+            </paper-card>
+            <paper-card class="accordion-content-wrapper" id="accordion_content_container" >
+                <div class="card-actions" >
+                    <content></content>
+                </div>
+            </paper-card>
+        </div>
 	</template>
 	<script>
 		Polymer({
 			is:"paper-accordion-element",
             properties:{
-            /*
-			 *  
-			 * @attribute header-Text
-			 */
-			headerText:String,
-            
-            /*
-            * if the header should contain an icon, then this attribute can be used to pass the expected icon
-            * Please remark: only the icons of the iron-icons set are supported
-            * @attribute default-Icon
-            */
-            defaultIcon:{
-                type:String,
-                value:''
-            },
-            
-            /*
-            * Icon which is displayed if accordion is collapsed
-            * @attribute open-Icon
-            */
-            openIcon:{
-                type:String,
-                value:''
-            },
-            
-            /*
-			* defines if text block is collapsed or not
-            * @property isCollapsed
-			*/
-			isCollapsed:{
-				type:Boolean,
-				value:false,
-				notify:true,
-				observer:'_collapseChanged'
-						}
-					},
-             
-             	
+                /*
+    			 *
+    			 * @attribute header-Text
+    			 */
+    			headerText:String,
+
+                /*
+                * if the header should contain an icon, then this attribute can be used to pass the expected icon
+                * Please remark: only the icons of the iron-icons set are supported
+                * @attribute default-Icon
+                */
+                defaultIcon:{
+                    type:String,
+                    value:''
+                },
+
+                /*
+                * Icon which is displayed if accordion is collapsed
+                * @attribute open-Icon
+                */
+                openIcon:{
+                    type:String,
+                    value:''
+                },
+
+                /*
+    			* defines if text block is collapsed or not
+                * @property isCollapsed
+    			*/
+    			isCollapsed:{
+    				type:Boolean,
+    				value:false,
+    				notify:true,
+    				observer:'_collapseChanged'
+				}
+			},
+
             listeners:{
                 /*
 			     * registration of the onClick event handler which is used to show or disappear the content
 			     */
                 'open_link.click':'_onOpenClick',
                 /*
-			     * registration of the CSS event transitioned. It is required for computing the correct height of a content container. 
+			     * registration of the CSS event transitioned. It is required for computing the correct height of a content container.
 			     */
                 'transitionend':'_transitionEnd',
                 /*
                 * registration of the onClick event handler of the icon
                 */
                 'accordion_icon.click':'_onOpenClick'
-                
+
             },
+
             hostAttributes:{
-			/*
-             * tag attribute which can be used to identify if the content is collapsed or not
-             * @attribute content-collpased
-             */
-            'content-collapsed':'false'	
+    			/*
+                 * tag attribute which can be used to identify if the content is collapsed or not
+                 * @attribute content-collpased
+                 */
+                'content-collapsed':'false'
 		    },
-            
+
             /*
             * init height property
             */
             attached:function(){
-            this._SetItemHeight('0px');    
+                this._SetItemHeight('0px');
             },
-            
+
             _computeIfSpaceNeeded: function(headerText, iconValue, openIconValue){
                 var classValue='header-items-space';
                 if(!headerText && ! iconValue && ! openIconValue) return null;
                 if(headerText && iconValue) return classValue;
                 if(headerText && openIconValue) return classValue;
-            },            
-            
+            },
+
             _onOpenClick:function(e){
-               if(this.isCollapsed){
-				this.hideContainer();
-			     }else{
+                if(this.isCollapsed){
+                    this.hideContainer();
+                }else{
                     /*
-                    * Fires an additional event which is handled by the element accordion-container if the accordion element is surrounded by the container element.
+                    * Fires an additional event which is handled by the element accordion-container
+                    * if the accordion element is surrounded by the container element.
                     */
                     this.fire('opening');
                     this.showContainer();
-	               	}
-              },
+                }
+            },
             _transitionEnd:function(e){
                 if(this.isCollapsed){
-                        this._SetItemHeight('auto');
-                        this._EnableTransitionDuration(false);
-                        this.updateStyles();                           
-                    }else{
-                        this._EnableTransitionDuration(false);
-                      }
+                    this._SetItemHeight('auto');
+                    this._EnableTransitionDuration(false);
+                    this.updateStyles();
+                }else{
+                    this._EnableTransitionDuration(false);
+                }
             },
-        /*
-		* shows the content
-		* @method showContainer
-		*/
-		showContainer:function(){
-            if(this.isCollapsed)return;
-            this.isCollapsed=true; 
-         	this._SetItemHeight('auto');
-            var calculatedValue = this._CalculateItemHeight();
-            this._SetItemHeight('0px');
-            this._SetOffsetHeight();
-            this._EnableTransitionDuration(true);
-            this._SetItemHeight(calculatedValue);
-		    this._ChangeIcon();                   
-		},
-		/*
-		* hides the content
-		* @method hideContainer
-		*/
-		hideContainer:function(){
-            if(!this.isCollapsed)return;
-            this.isCollapsed=false; 
-            var calculatedHeight = this._CalculateItemHeight();
-            this._SetItemHeight(calculatedHeight);
-            this._EnableTransitionDuration(true);
-            this._SetOffsetHeight();
-			this._SetItemHeight('0px');
-            this._ChangeIcon(); 
-        },
-		
-		_collapseChanged:function(){
-			this.setAttribute('content-collapsed',this.isCollapsed);	
-		},
-		_CalculateItemHeight:function(){
+            /*
+    		* shows the content
+    		* @method showContainer
+    		*/
+    		showContainer:function(){
+                if(this.isCollapsed)return;
+                this.isCollapsed=true;
+             	this._SetItemHeight('auto');
+                var calculatedValue = this._CalculateItemHeight();
+                this._SetItemHeight('0px');
+                this._SetOffsetHeight();
+                this._EnableTransitionDuration(true);
+                this._SetItemHeight(calculatedValue);
+    		    this._ChangeIcon();
+    		},
+    		/*
+    		* hides the content
+    		* @method hideContainer
+    		*/
+    		hideContainer:function(){
+                if(!this.isCollapsed)return;
+                this.isCollapsed=false;
+                var calculatedHeight = this._CalculateItemHeight();
+                this._SetItemHeight(calculatedHeight);
+                this._EnableTransitionDuration(true);
+                this._SetOffsetHeight();
+    			this._SetItemHeight('0px');
+                this._ChangeIcon();
+            },
+
+    		_collapseChanged:function(){
+    			this.setAttribute('content-collapsed',this.isCollapsed);
+    		},
+    		_CalculateItemHeight:function(){
                 return this.$.accordion_content_container.getBoundingClientRect()['height']+'px';
             },
             _GetCurrentItemHeight:function(){
@@ -272,9 +267,8 @@ paper-ripple {
             },
             _ChangeIcon(){
                 if(!this.defaultIcon || !this.openIcon)return;
-                this.$.accordion_icon.icon = (this.isCollapsed) ? this.openIcon : this.defaultIcon;                 
-            }	
+                this.$.accordion_icon.icon = (this.isCollapsed) ? this.openIcon : this.defaultIcon;
+            }
 		});
 	</script>
-	
 </dom-module>
