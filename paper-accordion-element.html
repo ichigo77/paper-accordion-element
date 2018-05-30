@@ -253,19 +253,19 @@ Custom property | Description | Default
             _GetCurrentItemHeight:function(){
                 return this.$.accordion_content_container.style['height'];
             },
-            _EnableTransitionDuration(shouldBeActivated){
+            _EnableTransitionDuration:function(shouldBeActivated){
                 this.$.accordion_content_container.style.transitionDuration = (shouldBeActivated ? '':'0s');
             },
-            _SetItemHeight(size){
+            _SetItemHeight:function(size){
                 this.$.accordion_content_container.style['height'] = size;
             },
-            _SetDisplay(displayValue){
+            _SetDisplay:function(displayValue){
                 this.$.accordion_content_container.style['display']=displayValue;
             },
-            _SetOffsetHeight(){
+            _SetOffsetHeight:function(){
                 this.$.accordion_content_container.offsetHeight = this.$.accordion_content_container.offsetHeight;
             },
-            _ChangeIcon(){
+            _ChangeIcon:function(){
                 if(!this.defaultIcon || !this.openIcon)return;
                 this.$.accordion_icon.icon = (this.isCollapsed) ? this.openIcon : this.defaultIcon;
             }
